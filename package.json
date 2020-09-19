@@ -1,0 +1,26 @@
+{
+  "name": "excel-course",
+  "version": "1.0.0",
+  "description": "Hello world 32",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/obiwan00/excel-course.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/obiwan00/excel-course/issues"
+  },
+  "homepage": "https://github.com/obiwan00/excel-course#readme",
+  "private": true,
+  "devDependencies": {
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  }
+}
