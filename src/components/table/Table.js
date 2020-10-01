@@ -28,6 +28,3 @@ export class Table extends ExcelComponent {
     // console.log('mouseup', event)
   }
 }
-
-// 81 msScripting
-// 188 msRendering
