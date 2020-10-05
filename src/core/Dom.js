@@ -14,6 +14,17 @@ class Dom {
     return this.$el.outerHTML.trim();
   }
 
+  text(text) {
+    if (typeof text === 'string') {
+      this.$el.textContent = text
+      return this
+    }
+    if (this.$el.tagName.toUpperCase() === 'input') {
+      return this.$el.value.trim()
+    }
+    return this.$el.textContent.trim()
+  }
+
   clear() {
     this.html('')
     return this
@@ -52,16 +63,24 @@ class Dom {
   }
 
   addClass(className) {
-    return $(this.$el.classList.add(className))
+    this.$el.classList.add(className)
+    return this
   }
 
   removeClass(className) {
-    return $(this.$el.classList.remove(className))
+    if (this.hasClass(className)) {
+      this.$el.classList.remove(className)
+    }
+    return this
   }
 
   hasClass(className) {
     const classList = Array.from(this.$el.classList)
     return Boolean(classList.filter(el => el === className).length)
+  }
+
+  find(selector) {
+    return $(this.$el.querySelector(selector))
   }
 
   findAll(selector) {
@@ -80,7 +99,36 @@ class Dom {
         .forEach((el => {
           this.$el.style[el] = styles[el]
         }))
-    return $(this.$el)
+    return this
+  }
+
+  setProperty(propertyName, value, priority) {
+    this.$el.style.setProperty(propertyName, value, priority)
+    return this
+  }
+
+  attr(attribute, value) {
+    if (!value) {
+      return this.$el.getAttribute(attribute)
+    } else {
+      return this.$el.setAttribute(attribute, value)
+    }
+  }
+
+  id(parser) {
+    if (parser) {
+      const parsed = this.id().split(':')
+      return {
+        row: +parsed[0],
+        col: +parsed[1]
+      }
+    }
+    return this.$el.dataset.id
+  }
+
+  focus() {
+    this.$el.focus()
+    return this
   }
 }
 

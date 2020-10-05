@@ -72,17 +72,19 @@
     z-index: 5;
     background-color: $primary-color;
     opacity: 0;
+    --wrapper-line-display: none;
 
     &:hover {
-      opacity: 1;
+      opacity: 1 !important;
     }
 
     &:before {
-      display: none;
+      display: var(--wrapper-line-display);
       content: '';
       position: absolute;
       background-color: $primary-color;
     }
+
   }
 
   .col-resize {
@@ -121,17 +123,5 @@
       width: calc(100vw - #{$info-cell-width});
     }
   }
-
-  .row-resize,
-  .col-resize {
-    &.active {
-      opacity: 1;
-
-      &:before {
-        display: block;
-      }
-    }
-  }
-
 
 }
