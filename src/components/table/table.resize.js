@@ -5,7 +5,10 @@ export function tableResize($root, event) {
   const $parent = $resizer.closest('[data-type=resizeable]')
   const coords = $parent.getCoords()
   const type = $resizer.data.resize
-  $resizer.addClass('active')
+  $resizer.css({
+    opacity: 1,
+  })
+  $resizer.setProperty('--wrapper-line-display', 'block')
   let delta
 
   document.onmousemove = e => {
@@ -31,6 +34,9 @@ export function tableResize($root, event) {
       $resizer.css({bottom: '-2px'})
       $parent.css({height: value + 'px'})
     }
-    $resizer.removeClass('active')
+    $resizer.css({
+      opacity: 0,
+    })
+    $resizer.setProperty('--wrapper-line-display', 'none')
   }
 }
