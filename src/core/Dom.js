@@ -15,11 +15,11 @@ class Dom {
   }
 
   text(text) {
-    if (typeof text === 'string') {
+    if (typeof text !== 'undefined') {
       this.$el.textContent = text
       return this
     }
-    if (this.$el.tagName.toUpperCase() === 'input') {
+    if (this.$el.tagName.toLowerCase() === 'input') {
       return this.$el.value.trim()
     }
     return this.$el.textContent.trim()
@@ -87,13 +87,6 @@ class Dom {
     return this.$el.querySelectorAll(selector)
   }
 
-  /*
-  *   {
-  *     height: '20px',
-  *     width: '30px',
-  *     backgroundColor: 'red',
-  *   }
-  * */
   css(styles) {
     Object.keys(styles)
         .forEach((el => {
@@ -102,16 +95,24 @@ class Dom {
     return this
   }
 
+  getStyles(styles = []) {
+    return styles.reduce((res, s) => {
+      res[s] = this.$el.style[s]
+      return res
+    }, {})
+  }
+
   setProperty(propertyName, value, priority) {
     this.$el.style.setProperty(propertyName, value, priority)
     return this
   }
 
   attr(attribute, value) {
-    if (!value) {
-      return this.$el.getAttribute(attribute)
+    if (value) {
+      this.$el.setAttribute(attribute, value)
+      return this
     } else {
-      return this.$el.setAttribute(attribute, value)
+      return this.$el.getAttribute(attribute)
     }
   }
 
