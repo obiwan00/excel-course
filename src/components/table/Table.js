@@ -36,7 +36,6 @@ export class Table extends ExcelComponent {
     this.selectCell($cell)
 
     this.$on('formula:input', value => {
-      console.log('formula:input value', value)
       this.selection.current
           .attr('data-value', value)
           .text(parse(value))
@@ -124,6 +123,9 @@ export class Table extends ExcelComponent {
   }
 
   onInput(event) {
-    this.updateTextInStore($(event.target).text())
+    console.log('table input', $(event.target).text())
+    const currentText = $(event.target).text()
+    $(event.target).attr('data-value', currentText)
+    this.updateTextInStore(currentText)
   }
 }

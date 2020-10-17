@@ -10,6 +10,7 @@ import {
 export function rootReducer(state, action) {
   let field
   let val
+  state = {...state, lastEdit: new Date().toJSON()}
   switch (action.type) {
     case TABLE_RESIZE:
       field = action.data.type === 'col' ? 'colState' : 'rowState'
@@ -46,7 +47,7 @@ export function rootReducer(state, action) {
 
 
 function value(state, field, action) {
-  const val = state[field] || {}
+  const val = {...state[field]} || {}
   val[action.data.id] = action.data.value
   return val
 }

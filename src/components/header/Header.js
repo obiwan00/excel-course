@@ -2,7 +2,8 @@ import {ExcelComponent} from '@core/ExcelComponent';
 import * as actions from '@/redux/actions';
 import {$} from '@core/Dom';
 import {defaultTableName} from '@/constants';
-import {debounce} from '@core/utils';
+import {debounce, deleteState} from '@core/utils';
+import {ActiveRoute} from '@core/routes/ActiveRoute';
 
 export class Header extends ExcelComponent {
   static className = 'excel__header'
@@ -10,7 +11,7 @@ export class Header extends ExcelComponent {
   constructor($root, options) {
     super($root, {
       name: 'Header',
-      listeners: ['input'],
+      listeners: ['input', 'click'],
       subscribe: ['tableName'],
       ...options
     });
@@ -25,24 +26,37 @@ export class Header extends ExcelComponent {
     return `
       <input type="text" class="input"
        value="${tableName}">
-            <div class="wr-btn">
-                <button class="button">
-                    <i class="material-icons">delete</i>
-                </button>
-                <button class="button">
-                    <i class="material-icons">exit_to_app</i>
-                </button>
-            </div>
+       <div class="wr-btn">
+           <a href="/" class="button">
+               <i class="material-icons">exit_to_app</i>
+           </a>
+           <button class="button" data-appointment="delete">
+               <i class="material-icons" data-appointment="delete">delete</i>
+           </button>
+       </div>
      `
   }
 
   storeChanged(changes) {
-    console.log('tableName: ', changes)
   }
 
   onInput(event) {
     this.$dispatch(actions.changeTableName({
       value: $(event.target).text()
     }))
+  }
+
+  onClick(event) {
+    const $target = $(event.target)
+    if ($target.data.appointment === 'delete') {
+      const tableName = this.store.getState().tableName
+      const decision = confirm(
+          `Delete table ${tableName}`
+      )
+      if (decision) {
+        deleteState(ActiveRoute.param)
+        ActiveRoute.navigate('')
+      }
+    }
   }
 }
