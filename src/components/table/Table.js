@@ -123,7 +123,6 @@ export class Table extends ExcelComponent {
   }
 
   onInput(event) {
-    console.log('table input', $(event.target).text())
     const currentText = $(event.target).text()
     $(event.target).attr('data-value', currentText)
     this.updateTextInStore(currentText)
