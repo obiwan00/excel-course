@@ -75,3 +75,26 @@ export function debounce(fn, wait) {
     timeout = setTimeout(later, wait)
   }
 }
+
+export function secondsToDate(date = new Date()) {
+  date = new Date(date)
+  const padZero = value => {
+    return String(value).padStart(2, '0')
+  }
+
+  const dd = padZero(date.getDate())
+  const mm = padZero(date.getMonth() + 1)
+  const yyyy = date.getFullYear();
+  const hours = padZero(date.getHours())
+  const minutes = padZero(date.getMinutes())
+
+  return `${hours}:${minutes} — ${dd}.${mm}.${yyyy}`
+}
+
+export function deleteState(stateId) {
+  localStorage.removeItem(`excel:${stateId}`)
+}
+
+export function preventDefault(event) {
+  event.preventDefault()
+}
