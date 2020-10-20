@@ -5,41 +5,43 @@ import {
   TABLE_RESIZE,
   APPLY_STYLE,
 }
-  from '@/redux/types';
+  from './types';
 
-export function rootReducer(state, action) {
+export function rootReducer(receivedState, action) {
   let field
   let val
-  state = {...state, lastEdit: new Date().toJSON()}
+  const state = {...receivedState, lastEdit: new Date().toJSON()}
   switch (action.type) {
     case TABLE_RESIZE:
       field = action.data.type === 'col' ? 'colState' : 'rowState'
-      return {...state, [field]: value(state, field, action)}
+      state[field] = value(state, field, action)
+      return state
     case CHANGE_TEXT:
       field = 'dataState'
-      return {
-        ...state,
-        currentText: action.data.value,
-        [field]: value(state, field, action)
-      }
+      state['currentText'] = action.data.value
+      state[field] = value(state, field, action)
+      return state
     case CHANGE_TABLE_NAME:
-      return {...state, tableName: action.data.value}
+      state['tableName'] = action.data.value
+      return state
     case CHANGE_STYLES:
-      return {...state, currentStyles: {...state.currentStyles, ...action.data}}
+      state['currentStyles'] = {
+        ...state.currentStyles,
+        ...action.data
+      }
+      return state
     case APPLY_STYLE:
       field = 'stylesState'
       val = state[field] || {}
       action.data.ids.forEach(id => {
         val[id] = {...val[id], ...action.data.value}
       })
-      return {
-        ...state,
-        [field]: val,
-        currentStyles: {
-          ...state.currentStyles,
-          ...action.data.value
-        }
+      state[field] = val
+      state['currentStyles'] = {
+        ...state.currentStyles,
+        ...action.data.value
       }
+      return state
     default:
       return state
   }
