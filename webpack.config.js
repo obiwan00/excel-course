@@ -37,17 +37,10 @@ const cssLoaders = extra => {
 const jsLoaders = loaders => {
   const use = [{
     loader: 'babel-loader',
-    options: {
-      presets: ['@babel/preset-env'],
-      plugins: [
-        '@babel/plugin-proposal-class-properties'
-      ]
-    }
   }]
   if (isDev) {
     use.push(loaders);
   }
-
   return use;
 }
 
