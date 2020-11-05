@@ -21,5 +21,5 @@ const normalize = state => ({
 })
 
 export function normalizeInitialState(state) {
-  return state ? normalize(state) : defaultState
+  return state ? normalize(state) : {...defaultState}
 }
